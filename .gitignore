@@ -13,6 +13,8 @@ target/
 *.ipr
 /.idea/
 .gitignore
+target
+/.gitignore/
 
 ### Eclipse ###
 .apt_generated
