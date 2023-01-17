@@ -21,6 +21,8 @@ public class RegisterPage {
     private  By registerUserButton = By.xpath("//*[@id=\"root\"]/div/main/div/form/button");
     private By inputError = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[3]/div/p");
 
+    private By loginButtonInRegisterForm = By.xpath("//*[@id=\"root\"]/div/main/div/div/p/a");
+
     public void clickNameInput(){
         driver.findElement(name).click();
     }
@@ -35,6 +37,10 @@ public class RegisterPage {
 
     public void clickRegisterButton(){
         driver.findElement(registerUserButton).click();
+    }
+
+    public void clickLoginButtonInRegisterForm(){
+        driver.findElement(loginButtonInRegisterForm).click();
     }
 
     public void writeNameInput(String userName){

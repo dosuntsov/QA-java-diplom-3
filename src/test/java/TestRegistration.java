@@ -3,11 +3,20 @@ import PageObject.RegisterPage;
 import PageObject.StartPage;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import io.restassured.RestAssured;
+
+import static io.restassured.RestAssured.given;
+
 
 public class TestRegistration {
+    @Before
+    public void setUp() {
+        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+    }
     private WebDriver driver;
     private String token;
     private String userName = "Monkey D. Luffy";
@@ -57,22 +66,20 @@ public class TestRegistration {
     public void closeBrowserAndDeleteUser() {
         driver.quit();
 
-//        token = given()
-//                .header("Content-type", "application/json")
-//                .body(user)
-//                .post("/api/auth/login")
-//                .then()
-//                .assertThat()
-//                .statusCode(200)
-//                .extract()
-//                .path("accessToken");
-//
-//        given()
-//                .header("Authorization", token)
-//                .delete("/api/auth/user")
-//                .then()
-//                .assertThat()
-//                .statusCode(202);
+        token = given()
+                .header("Content-type", "application/json")
+                .body(user)
+                .post("/api/auth/login")
+                .then()
+                .extract()
+                .path("accessToken");
+
+        if(token != null){
+            given()
+                .header("Authorization", token)
+                .delete("/api/auth/user");
+        }
+
     }
 
 }
