@@ -17,6 +17,7 @@ public class TestRegistration {
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
     }
+
     private WebDriver driver;
     private String token;
     private String userName = "Monkey D. Luffy";
@@ -45,8 +46,9 @@ public class TestRegistration {
         Assert.assertEquals("Вход", loginPage.getHeaderText());
 
     }
+
     @Test
-    public void checkIfTooShortPasswordIsNotAllowed(){
+    public void checkIfTooShortPasswordIsNotAllowed() {
         driver = new ChromeDriver();
         driver.get("https://stellarburgers.nomoreparties.site/");
 
@@ -66,19 +68,15 @@ public class TestRegistration {
     public void closeBrowserAndDeleteUser() {
         driver.quit();
 
-        token = given()
-                .header("Content-type", "application/json")
-                .body(user)
-                .post("/api/auth/login")
-                .then()
-                .extract()
-                .path("accessToken");
-
-        if(token != null){
-            given()
-                .header("Authorization", token)
-                .delete("/api/auth/user");
-        }
+//        token = given()
+//                .header("Content-type", "application/json")
+//                .body(user)
+//                .post("/api/auth/login")
+//                .then()
+//                .extract()
+//                .path("accessToken");
+        user.loginUserViaAPI();
+        user.deleteUserViaAPI();
 
     }
 

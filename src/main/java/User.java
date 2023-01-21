@@ -1,40 +1,41 @@
+import static io.restassured.RestAssured.given;
+
 public class User {
-
-    public String email;
-    public String password;
-    public String name;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String token;
+    UserJSON user;
 
     public User(String email, String password, String name) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
+        user = new UserJSON(email, password, name);
     }
 
-    public User(){
+    public void createAUserViaAPI() {
+        token = given()
+                .header("Content-type", "application/json")
+                .body(user)
+                .post("/api/auth/register")
+                .then()
+                .extract()
+                .path("accessToken");
+        this.token = token;
+    }
 
+    public void deleteUserViaAPI(){
+        if(token != null) {
+            given()
+                    .header("Content-type", "application/json")
+                    .header("Authorization", token)
+                    .delete("/api/auth/user");
+        }
+    }
+
+    public void loginUserViaAPI() {
+        token = given()
+                .header("Content-type", "application/json")
+                .body(user)
+                .post("/api/auth/login")
+                .then()
+                .extract()
+                .path("accessToken");
+        this.token = token;
     }
 }

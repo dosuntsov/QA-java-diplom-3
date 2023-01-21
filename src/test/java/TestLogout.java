@@ -23,19 +23,9 @@ public class TestLogout {
     @Before
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
-        createAUser();
-
+        user.createAUserViaAPI();
     }
 
-    public void createAUser() {
-        token = given()
-                .header("Content-type", "application/json")
-                .body(user)
-                .post("/api/auth/register")
-                .then()
-                .extract()
-                .path("accessToken");
-    }
     @Test
     public void checkIfLogoutWorksCorrectly(){
         driver = new ChromeDriver();
@@ -64,10 +54,6 @@ public class TestLogout {
     @After
     public void closeBrowserAndDeleteUser() {
         driver.quit();
-
-        given()
-                .header("Content-type", "application/json")
-                .header("Authorization", token)
-                .delete("/api/auth/user");
+        user.deleteUserViaAPI();
     }
 }

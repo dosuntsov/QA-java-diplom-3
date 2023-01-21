@@ -23,18 +23,8 @@ public class TestMoveToPrivateCab {
     @Before
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
-        createAUser();
+        user.createAUserViaAPI();
 
-    }
-
-    public void createAUser() {
-        token = given()
-                .header("Content-type", "application/json")
-                .body(user)
-                .post("/api/auth/register")
-                .then()
-                .extract()
-                .path("accessToken");
     }
 
     @Test
@@ -44,6 +34,7 @@ public class TestMoveToPrivateCab {
 
         StartPage startPage = new StartPage(driver);
         startPage.clickOnPersonalAccount();
+
         //Login User
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginUser(userEmail, userPassword);
@@ -62,12 +53,7 @@ public class TestMoveToPrivateCab {
     @After
     public void closeBrowserAndDeleteUser() {
         driver.quit();
-
-        given()
-                .header("Content-type", "application/json")
-                .header("Authorization", token)
-                .delete("/api/auth/user");
-
+        user.deleteUserViaAPI();
     }
 
 }

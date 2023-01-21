@@ -23,17 +23,7 @@ public class TestMoveToConstructor {
     @Before
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
-        createAUser();
-    }
-
-    public void createAUser() {
-        token = given()
-                .header("Content-type", "application/json")
-                .body(user)
-                .post("/api/auth/register")
-                .then()
-                .extract()
-                .path("accessToken");
+        user.createAUserViaAPI();
     }
 
     @Test
@@ -89,12 +79,7 @@ public class TestMoveToConstructor {
     @After
     public void closeBrowserAndDeleteUser() {
         driver.quit();
-
-        given()
-                .header("Content-type", "application/json")
-                .header("Authorization", token)
-                .delete("/api/auth/user");
-
+        user.deleteUserViaAPI();
     }
 
 }

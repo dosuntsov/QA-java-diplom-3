@@ -12,27 +12,17 @@ import static io.restassured.RestAssured.given;
 public class TestLogin {
 
     private WebDriver driver;
-    public String token;
     private String userName = "Monkey D. Luffy";
     private String userEmail = "mugiwara@op.com";
     private String userPassword = "kingofpirates";
 
     User user = new User(userEmail, userPassword, userName);
 
+
     @Before
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
-        createAUser();
-    }
-
-    public void createAUser() {
-        token = given()
-                .header("Content-type", "application/json")
-                .body(user)
-                .post("/api/auth/register")
-                .then()
-                .extract()
-                .path("accessToken");
+        user.createAUserViaAPI();
     }
 
     @Test
@@ -136,11 +126,7 @@ public class TestLogin {
     @After
     public void closeBrowserAndDeleteUser() {
         driver.quit();
-
-        given()
-                .header("Content-type", "application/json")
-                .header("Authorization", token)
-                .delete("/api/auth/user");
+        user.deleteUserViaAPI();
 
     }
 
