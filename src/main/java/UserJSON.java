@@ -1,10 +1,17 @@
 public class UserJSON {
+    private String email;
+    private String password;
+    private String name;
 
+    public UserJSON(String email, String password, String name) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
 
-    public String email;
-    public String password;
-    public String name;
+    public UserJSON() {
 
+    }
     public String getEmail() {
         return email;
     }
@@ -29,14 +36,5 @@ public class UserJSON {
         this.name = name;
     }
 
-    public UserJSON(String email, String password, String name) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-    }
-
-    public UserJSON() {
-
-    }
 
 }

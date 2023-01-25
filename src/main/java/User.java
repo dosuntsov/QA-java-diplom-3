@@ -2,10 +2,13 @@ import static io.restassured.RestAssured.given;
 
 public class User {
     private String token;
-    UserJSON user;
+    private UserJSON user;
 
     public User(String email, String password, String name) {
         user = new UserJSON(email, password, name);
+    }
+    public String getToken(){
+        return token;
     }
 
     public void createAUserViaAPI() {

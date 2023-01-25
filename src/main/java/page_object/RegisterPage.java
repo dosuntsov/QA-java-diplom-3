@@ -1,4 +1,4 @@
-package PageObject;
+package page_object;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,17 +11,13 @@ public class RegisterPage {
         this.driver = driver;
     }
 
-    private String userEmail;
-    private String userPassword;
-    private String userName;
-    private String userShortPassword;
-    private By name = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[1]/div/div/input");
-    private By email = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[2]/div/div/input");
-    private By password = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[3]/div/div/input");
-    private  By registerUserButton = By.xpath("//*[@id=\"root\"]/div/main/div/form/button");
-    private By inputError = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[3]/div/p");
+    private By name = By.xpath("//*[@class = 'input__container']/div/label[text() = 'Имя']/following-sibling::input");
+    private By email = By.xpath("//*[@class = 'input__container']/div/label[text() = 'Email']/following-sibling::input");
+    private By password = By.xpath("//*[@class = 'input__container']/div/label[text() = 'Пароль']/following-sibling::input");
+    private  By registerUserButton = By.xpath("//*[@class = 'button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_medium__3zxIa' and text() = 'Зарегистрироваться']");
+    private By inputError = By.xpath("//*[@class = 'input__error text_type_main-default']");
 
-    private By loginButtonInRegisterForm = By.xpath("//*[@id=\"root\"]/div/main/div/div/p/a");
+    private By loginButtonInRegisterForm = By.xpath("//*[@class = 'Auth_link__1fOlj' and @href = '/login']");
 
     public void clickNameInput(){
         driver.findElement(name).click();
@@ -53,10 +49,6 @@ public class RegisterPage {
         driver.findElement(password).sendKeys(userPassword);
     }
 
-    public void writeTooShortPasswordInput(String userShortPassword){
-        driver.findElement(password).sendKeys(userShortPassword);
-    }
-
     public void waitForInputsToBeVisible(){
         new WebDriverWait(driver, 10).until (driver -> ((driver.findElement(name).isDisplayed())));
     }
@@ -76,18 +68,5 @@ public class RegisterPage {
         writePasswordInput(userPassword);
         clickRegisterButton();
     }
-
-    public void fillShortPasswordAndRegister(String userName, String userEmail, String userShortPassword){
-        waitForInputsToBeVisible();
-        clickNameInput();
-        writeNameInput(userName);
-        clickEmailInput();
-        writeEmailInput(userEmail);
-        clickPasswordInput();
-        writeTooShortPasswordInput(userShortPassword);
-        clickRegisterButton();
-    }
-
-
 
 }

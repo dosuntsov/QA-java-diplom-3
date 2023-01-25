@@ -1,6 +1,7 @@
-import PageObject.LoginPage;
-import PageObject.RegisterPage;
-import PageObject.StartPage;
+import org.apache.commons.lang3.RandomStringUtils;
+import page_object.LoginPage;
+import page_object.RegisterPage;
+import page_object.StartPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,29 +10,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.restassured.RestAssured;
 
-import static io.restassured.RestAssured.given;
-
-
 public class TestRegistration {
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
-    }
-
+    private static final String BASE_URI  = "https://stellarburgers.nomoreparties.site";
     private WebDriver driver;
-    private String token;
-    private String userName = "Monkey D. Luffy";
-    private String userEmail = "mugiwara@op.com";
-    private String userPassword = "kingofpirates";
-    private String userShortPassword = "123";
+    String userEmail = (RandomStringUtils.randomAlphabetic(10) + "@mail.ru").toLowerCase();
+    String userPassword = RandomStringUtils.randomAlphabetic(10);
+    String userName = RandomStringUtils.randomAlphabetic(10);
+    String userShortPassword = RandomStringUtils.randomAlphabetic(3);
 
     User user = new User(userEmail, userPassword, userName);
+    User userTooShortPassword = new User(userEmail, userShortPassword, userName);
+    @Before
+    public void setUp() {
+        RestAssured.baseURI = BASE_URI;
+        driver = new ChromeDriver();
+        driver.get(BASE_URI);
+    }
 
     @Test
     public void checkIfValidRegistrationWorksOk() {
-        driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
         StartPage startPage = new StartPage(driver);
         startPage.clickOnPersonalAccount();
 
@@ -49,9 +46,6 @@ public class TestRegistration {
 
     @Test
     public void checkIfTooShortPasswordIsNotAllowed() {
-        driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
         StartPage startPage = new StartPage(driver);
         startPage.clickOnPersonalAccount();
 
@@ -59,7 +53,7 @@ public class TestRegistration {
         loginPage.clickOnRegisterButton();
 
         RegisterPage registerPage = new RegisterPage(driver);
-        registerPage.fillShortPasswordAndRegister(userName, userEmail, userShortPassword);
+        registerPage.fillAndClickRegister(userName, userEmail, userShortPassword);
 
         Assert.assertEquals("Некорректный пароль", registerPage.getErrorText());
     }
@@ -67,16 +61,10 @@ public class TestRegistration {
     @After
     public void closeBrowserAndDeleteUser() {
         driver.quit();
-
-//        token = given()
-//                .header("Content-type", "application/json")
-//                .body(user)
-//                .post("/api/auth/login")
-//                .then()
-//                .extract()
-//                .path("accessToken");
         user.loginUserViaAPI();
         user.deleteUserViaAPI();
+        userTooShortPassword.loginUserViaAPI();
+        userTooShortPassword.deleteUserViaAPI();
 
     }
 

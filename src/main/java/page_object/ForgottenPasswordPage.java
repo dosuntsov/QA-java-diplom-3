@@ -1,4 +1,4 @@
-package PageObject;
+package page_object;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +10,7 @@ public class ForgottenPasswordPage {
         this.driver = driver;
     }
 
-    private By forgottenPasswordLogin = By.xpath("//*[@id=\"root\"]/div/main/div/div/p/a");
+    private By forgottenPasswordLogin = By.xpath("//*[@class = 'Auth_link__1fOlj' and @href = '/login']");
 
     public void clickOnLoginButtonRestorePassword(){
         driver.findElement(forgottenPasswordLogin).click();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="TestConstructor" time="25.318" errors="0" skipped="0">
+<testsuite tests="3" failures="0" name="TestConstructor" time="18.003" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2022.2.1"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -64,5 +64,7 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="TestConstructor" name="checkIfTransitionsWorkCorrectly" time="25.318"/>
+  <testcase classname="TestConstructor" name="checkIfTransitionsWorkCorrectlySauces" time="6.114"/>
+  <testcase classname="TestConstructor" name="checkIfTransitionsWorkCorrectlyBuns" time="8.062"/>
+  <testcase classname="TestConstructor" name="checkIfTransitionsWorkCorrectlyFillings" time="3.827"/>
 </testsuite>

@@ -1,4 +1,4 @@
-package PageObject;
+package page_object;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,9 +11,9 @@ public class PrivateCabPage {
         this.driver = driver;
     }
 
-    private By profileButton = By.xpath("//*[@id=\"root\"]/div/main/div/nav/ul/li[1]/a");
-    private By logoButton = By.xpath("//*[@id=\"root\"]/div/header/nav/div/a");
-    private By constructorButton = By.xpath("//*[@id=\"root\"]/div/header/nav/ul/li[1]/a");
+    private By profileButton = By.xpath("//li/a[text() = 'Профиль']");
+    private By logoButton = By.xpath("//*[@class = 'AppHeader_header__logo__2D0X2']/a");
+    private By constructorButton = By.xpath("//*[@class = 'AppHeader_header__linkText__3q_va ml-2' and text() = 'Конструктор']");
     private By logoutButton = By.xpath("//*[@type='button' and text() = 'Выход']");
 
     public void clickOnLogo(){

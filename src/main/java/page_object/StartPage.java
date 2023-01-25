@@ -1,4 +1,4 @@
-package PageObject;
+package page_object;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,13 +12,11 @@ public class StartPage {
     }
 
     private By personalAccount = By.xpath(".//a[@class = 'AppHeader_header__link__3D_hX' and @href = '/account']");
-    private By mainPageLoginButton = By.xpath("//*[@id=\"root\"]/div/main/section[2]/div/button");
-    private By bunsButton = By.xpath("//*[@class='text text_type_main-default' and text() = 'Булки']");
-    private By sauceButton = By.xpath("//*[@class='text text_type_main-default' and text() = 'Соусы']");
-    private By fillingsButton = By.xpath("//*[@class='text text_type_main-default' and text() = 'Начинки']");
-    private By expectedBun = By.xpath("//*[@class='BurgerIngredient_ingredient__text__yp3dH' and text() = 'Краторная булка N-200i']");
-    private By expectedSauce = By.xpath("//*[@class='BurgerIngredient_ingredient__text__yp3dH' and text() = 'Соус с шипами Антарианского плоскоходца']");
-    private By expectedFilling = By.xpath("//*[@class='BurgerIngredient_ingredient__text__yp3dH' and text() = 'Говяжий метеорит (отбивная)']");
+    private By mainPageLoginButton = By.xpath("//*[@class = 'AppHeader_header__linkText__3q_va ml-2' and text() = 'Личный Кабинет']");
+    private By bunsButton = By.xpath("//*[@class='text text_type_main-default' and text() = 'Булки']/..");
+    private By sauceButton = By.xpath("//*[@class='text text_type_main-default' and text() = 'Соусы']/..");
+    private By fillingsButton = By.xpath("//*[@class='text text_type_main-default' and text() = 'Начинки']/..");
+
 
     public void clickMainPageLoginButton() {
         driver.findElement(mainPageLoginButton).click();
@@ -50,29 +48,29 @@ public class StartPage {
     }
 
     public void waitForBunsToLoad() {
-        new WebDriverWait(driver, 10).until(driver1 -> ((driver.findElement(expectedBun).isDisplayed())));
+        new WebDriverWait(driver, 10).until(driver1 -> ((driver.findElement(bunsButton).isDisplayed())));
     }
 
     public void waitForSaucesToLoad() {
-        new WebDriverWait(driver, 10).until(driver1 -> ((driver.findElement(expectedSauce).isDisplayed())));
+        new WebDriverWait(driver, 10).until(driver1 -> ((driver.findElement(sauceButton).isDisplayed())));
     }
 
     public void waitForFillingsToLoad() {
-        new WebDriverWait(driver, 10).until(driver1 -> ((driver.findElement(expectedFilling).isDisplayed())));
+        new WebDriverWait(driver, 10).until(driver1 -> ((driver.findElement(fillingsButton).isDisplayed())));
     }
 
     public boolean checkIfBunIsVisible() {
-        boolean resultBuns = driver.findElement(expectedBun).isDisplayed();
+        boolean resultBuns = driver.findElement(bunsButton).getAttribute("class").contains("current");
         return resultBuns;
     }
 
     public boolean checkIfSauceIsVisible() {
-        boolean resultSauces = driver.findElement(expectedSauce).isDisplayed();
+        boolean resultSauces = driver.findElement(sauceButton).getAttribute("class").contains("current");
         return resultSauces;
     }
 
     public boolean checkIfFillingIsVisible() {
-        boolean resultFillings = driver.findElement(expectedFilling).isDisplayed();
+        boolean resultFillings = driver.findElement(fillingsButton).getAttribute("class").contains("current");
         return resultFillings;
     }
 

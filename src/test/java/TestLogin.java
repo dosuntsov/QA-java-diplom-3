@@ -1,4 +1,5 @@
-import PageObject.*;
+import org.apache.commons.lang3.RandomStringUtils;
+import page_object.*;
 import io.restassured.RestAssured;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,27 +11,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import static io.restassured.RestAssured.given;
 
 public class TestLogin {
-
+    private static final String BASE_URI  = "https://stellarburgers.nomoreparties.site";
     private WebDriver driver;
-    private String userName = "Monkey D. Luffy";
-    private String userEmail = "mugiwara@op.com";
-    private String userPassword = "kingofpirates";
+    String userEmail = (RandomStringUtils.randomAlphabetic(10) + "@mail.ru").toLowerCase();
+    String userPassword = RandomStringUtils.randomAlphabetic(10);
+    String userName = RandomStringUtils.randomAlphabetic(10);
 
     User user = new User(userEmail, userPassword, userName);
 
 
     @Before
     public void setUp() {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+        RestAssured.baseURI = BASE_URI;
+        driver = new ChromeDriver();
+        driver.get(BASE_URI);
         user.createAUserViaAPI();
     }
 
     @Test
     public void checkIfLoginWorksFromMainPage() {
-
-        driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
         StartPage startPage = new StartPage(driver);
         startPage.clickMainPageLoginButton();
 
@@ -50,9 +49,6 @@ public class TestLogin {
 
     @Test
     public void checkIfLoginWorksFromPersonalAccountButton() {
-        driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
         StartPage startPage = new StartPage(driver);
         startPage.clickOnPersonalAccount();
 
@@ -72,9 +68,6 @@ public class TestLogin {
 
     @Test
     public void checkIfLoginWorksFromRegistrationForm() {
-        driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
         StartPage startPage = new StartPage(driver);
         startPage.clickOnPersonalAccount();
 
@@ -98,9 +91,6 @@ public class TestLogin {
 
     @Test
     public void checkIfLoginWorksFromRestoringPasswordForm() {
-        driver = new ChromeDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
         StartPage startPage = new StartPage(driver);
         startPage.clickOnPersonalAccount();
 

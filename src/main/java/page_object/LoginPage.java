@@ -1,4 +1,4 @@
-package PageObject;
+package page_object;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -12,11 +12,11 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    private By loginInput = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[1]/div/div/input");
-    private By loginButton = By.xpath("//*[@id=\"root\"]/div/main/div/form/button");
+    private By loginInput = By.xpath("//*[@class = 'input__container']/div/label[text() = 'Email']/following-sibling::input");
+    private By loginButton = By.xpath("//*[@class = 'button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_medium__3zxIa' and text() = 'Войти']");
     private By registerButton = By.xpath(".//a[@class = 'Auth_link__1fOlj' and @href = '/register']");
-    private By enterPicture = By.xpath("//*[@id=\"root\"]/div/main/div/h2");
-    private By forgottenPassword = By.xpath("//*[@id=\"root\"]/div/main/div/div/p[2]/a");
+    private By enterPicture = By.xpath("//h2[text() = 'Вход']");
+    private By forgottenPassword = By.xpath("//*[@class = 'Auth_link__1fOlj' and @href = '/forgot-password']");
 
 
     public void clickOnRegisterButton() {
